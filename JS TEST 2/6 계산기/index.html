@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #calc {
+            background-color: black;
+            width: max-content;
+            margin: 0 auto;
+            display: grid;
+            gap: 2px;
+            grid-template-rows: repeat(6, 50px);
+            grid-template-columns: repeat(4, 50px);
+            border: 2px solid;
+        }
+        div > div {
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            color: white;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+        .input { 
+            justify-content: end;
+            padding-right: 15px;
+            grid-column: 1 / 5; 
+            background-color: rgb(100, 100, 100);
+            font-size: 30px;
+        }
+        .ac { 
+            grid-column: 1 / 4; 
+            background-color: gray;
+        }
+        .zero { 
+            grid-column: 1 / 3; 
+        }
+        .num {
+            background-color: darkgray;
+        }
+        .sign, .ans {
+            background-color: orange;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="calc">
+        <div class="input"></div>
+        <div class="ac">AC</div>
+        <div class="div sign">÷</div>
+        <div class="seven num">7</div>
+        <div class="eight num">8</div>
+        <div class="nine num">9</div>
+        <div class="mul sign">×</div>
+        <div class="four num">4</div>
+        <div class="five num">5</div>
+        <div class="six num">6</div>
+        <div class="sub sign">-</div>
+        <div class="one num">1</div>
+        <div class="two num">2</div>
+        <div class="three num">3</div>
+        <div class="add sign">+</div>
+        <div class="zero num">0</div>
+        <div class="dot num">.</div>
+        <div class="ans">=</div>
+    </div>
+</body>
+<script>
+    const input = document.querySelector(".input");
+    const numList = document.querySelectorAll(".num");
+    const signList = document.querySelectorAll(".sign");
+
+    let signArr = [];
+    numList.forEach((v) => v.onclick = (e) => {
+        console.log(e.target);
+        input.innerHTML += e.target.innerHTML;
+    })
+
+    signList.forEach((v) => v.onclick = (e) => {
+        result = Number(input.innerHTML);
+        switch (e.target.innerHTML) {
+            case "+":
+                signArr.push("+");
+                break;
+            case "-":
+            signArr.push("-");
+                break;
+            case "×":
+                signArr.push("*");
+                break;
+            case "÷":
+                signArr.push("/");
+                break;
+        }
+        input.innerHTML += e.target.innerHTML;
+    })
+
+    document.querySelector(".ac").onclick = () => {
+        input.innerHTML = "";
+    }
+
+    document.querySelector(".ans").onclick = () => {
+        const result = input.innerHTML;
+        const arr = result.replaceAll("+", " + ").replaceAll("-", " - ").replaceAll("×", " * ").replaceAll("÷", " / ").split(" ");
+        // document.querySelector(".input").innerHTML = eval(arr);
+        console.log(arr);
+        let calc = Number(arr[0]);
+        console.log(calc)
+        for (let i = 0; i < arr.length / 2; i++) {
+            console.log(arr[i * 2 + 1]);
+            switch (arr[i * 2 - 1]) {
+            case "+":
+                calc += Number(arr[i * 2]);
+                break;
+            case "-":
+                calc -= Number(arr[i * 2]);
+                break;
+            case "*":
+                calc *= Number(arr[i * 2]);
+                break;
+            case "/":
+                calc /= Number(arr[i * 2]);
+                break;
+            }
+            console.log(calc);
+        }
+        document.querySelector(".input").innerHTML = calc;
+        
+    }
+</script>
+</html>

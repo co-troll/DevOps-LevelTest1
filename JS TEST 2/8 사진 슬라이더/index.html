@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .imglist {
+            width: 1000px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .btnlist {
+            width: 200px;
+            margin: 0 auto;
+        }
+        .imgs {
+            position: absolute;
+            width: 500px;
+            height: 400px;
+            top: 0;
+            left: 0;
+            display: none;
+            transform:translate(50%);
+        }
+
+        .imgs.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>이미지 슬라이더</h1>
+    <div class="btnlist">
+        <button class="left"><</button>
+        <button class="right">></button>
+    </div>
+    <div class="imglist">
+        <img class="imgs show" src="cat1.jfif">
+        <img class="imgs" src="cat2.jfif">
+        <img class="imgs" src="cat3.jfif">
+        <img class="imgs" src="cat4.jfif">
+        </div>
+</body>
+<script>
+    const imglist = document.querySelectorAll(".imgs");
+    document.querySelector(".left").onclick = () => {
+        let show = "";
+        imglist.forEach((v, i) => {
+            if (v.classList.contains("show"))
+                show = i;
+            v.classList.remove("show");
+        })
+
+        if (show == 0) {
+            imglist[imglist.length - 1].classList.add("show");
+            return;
+        }
+        imglist[show - 1].classList.add("show");
+    }
+
+    document.querySelector(".right").onclick = () => {
+        let show = "";
+        imglist.forEach((v, i) => {
+            if (v.classList.contains("show"))
+                show = i;
+            v.classList.remove("show");
+        })
+
+        if (show == imglist.length -1) {
+            imglist[0].classList.add("show");
+            return;
+        }
+        imglist[show + 1].classList.add("show");
+    }
+
+    setInterval(() => {
+        let show = "";
+        imglist.forEach((v, i) => {
+            if (v.classList.contains("show"))
+                show = i;
+            v.classList.remove("show");
+        })
+
+        if (show == imglist.length -1) {
+            imglist[0].classList.add("show");
+            return;
+        }
+        imglist[show + 1].classList.add("show");
+    }, 5000);
+</script>
+</html>

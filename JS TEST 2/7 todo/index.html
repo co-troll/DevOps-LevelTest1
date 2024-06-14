@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .checked {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>TODO 리스트</h1>
+    <input type="text" class="input" placeholder="할일 입력">
+    <input type="button" class="inputbtn"  value="작성">
+    <ul class="ul">
+        <li class="checked">할일
+            <button class="check">완료</button>
+            <button class="delete">삭제</button>
+        </li>
+    </ul>
+</body>
+<script>
+    const todolist = JSON.parse(localStorage.getItem("todo")) || [];
+    document.querySelector(".inputbtn").onclick = (e) => {
+        write();
+    }
+    const write = () => {
+        console.log(11);
+        todolist.push({"checked": false, "todo" : document.querySelector(".input").value});
+        localStorage.setItem("todo", JSON.stringify(todolist));
+        document.querySelector(".input").value = "";
+        rendering();
+    }
+
+    const render = (index) => {
+        const item = todolist[index];
+        const li = document.createElement("li");
+        const checkbtn = document.createElement("button");
+        const deletebtn = document.createElement("button");
+
+        li.dataset.index = index;
+        if (item.checked)
+            li.classList.add("checked");
+        li.innerText = item.todo;
+
+        checkbtn.innerHTML = "완료"
+        deletebtn.innerHTML = "삭제"
+
+        checkbtn.onclick = (e) => {
+            checking(e);
+        }
+        deletebtn.onclick = (e) => {
+            deleting(e);
+        }
+        li.append(checkbtn, deletebtn);
+        return li;
+    }
+
+    const rendering = () => {
+        document.querySelector(".ul").innerHTML = "";
+        for (let i in todolist) {
+            document.querySelector(".ul").append(render(i));
+        }
+    }
+
+    rendering();
+
+    const checking = (e) => {
+        const index = e.target.parentNode.dataset.index;
+        todolist[index].checked = true;
+        localStorage.setItem("todo", JSON.stringify(todolist));
+        rendering();
+        
+        console.log(e.target.parentNode.dataset.index);
+    }
+    const deleting = (e) => {
+        const index = e.target.parentNode.dataset.index;
+        todolist.splice(index, 1);
+        localStorage.setItem("todo", JSON.stringify(todolist));
+        rendering();
+    }
+</script>
+</html>

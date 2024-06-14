@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modalimg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(2);
+        }
+        #modal.check {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>이미지 갤러리</h1>
+    <img class="imgs" src="cat1.jfif">
+    <img class="imgs" src="cat2.jfif">
+    <img class="imgs" src="cat3.jfif">
+    <img class="imgs" src="cat4.jfif">
+
+    <div id="modal">
+        <img class='modalimg' src="cat1.jfif">
+    </div>
+</body>
+<script>
+    const imgList = document.querySelectorAll(".imgs");
+    imgList.forEach((img) => {
+        img.onclick = (e) => {
+            document.querySelector("#modal").classList.add("check");
+            document.querySelector(".modalimg").src = e.target.src;
+        };
+    })
+    document.onclick = (e) => {
+        if (e.target == document.querySelector("#modal")) {
+            document.querySelector("#modal").classList.remove("check");
+        }
+    }
+</script>
+</html>
